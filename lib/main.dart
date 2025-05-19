@@ -1,6 +1,7 @@
 import 'package:bloc_projects/bloc/counter_bloc.dart';
 import 'package:bloc_projects/bloc/counter_event.dart';
 import 'package:bloc_projects/bloc/counter_state.dart';
+import 'package:bloc_projects/global_bloc_observer.dart';
 import 'package:bloc_projects/visibility_bloc/visibility_bloc.dart';
 import 'package:bloc_projects/visibility_bloc/visibility_event.dart';
 import 'package:bloc_projects/visibility_bloc/visibility_state.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = GlobalBlocObserver();
   runApp(const MyApp());
 }
 
@@ -111,6 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("Bloc listener"),
             ),
+            BlocSelector<CounterBloc, CounterState, bool>(selector: (state)=> state.count % 2 == 0, builder: (context, isEven){
+              return isEven ? const Text("Even"): Container();
+            })
           ],
         ),
       ),
